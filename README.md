@@ -1,39 +1,26 @@
-from django.db import models
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+import sys
+from setuptools import find_packages, setup
+from pathlib import Path
 
-class UserManager(BaseUserManager):
-    def create_user(self, email, password=None, **extra_fields):
-        # ... (code for creating user)
+CURRENT_DIR = Path(file).parent
+sys.path.insert(0, str(CURRENT_DIR))
 
-    def create_superuser(self, email, password, **extra_fields):
-        # ... (code for creating superuser)
+def get_long_description() -> str:
+      return (
+            (CURRENT_DIR / "python.md").read_text(encoding="utf8")
+      )
 
-class User(AbstractBaseUser):
-    email = models.EmailField(unique=True)
-    name = models.CharField(max_length=255, blank=True)
-    # ... (add any additional fields)
+setup(name='PythonLoginAndRegister',
+      version='0.1',
+      description='Basic Login and Registration in Python',
+      long_description=get_long_description(),
+      url:https://coda.io/d/_dH_9CwhSTfy/BRD-for-Corporate-Insurance-Market-Place_suouP
+      author='coda.io',
+      author_email='mounikasoft529@gmail.com',
+      license='MIT',
+      packages=['PythonLoginAndRegister'],
+      package_dir={"PythonLoginAndRegister": "src"},
+      zip_safe=False)
 
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = []
-
-    objects = UserManager()
-
-    def _str_(self):
-        return self.email
-        AUTH_USER_MODEL = 'users.User'    from django import forms
-from django.contrib.auth import authenticate
-
-class LoginForm(forms.Form):
-    email = forms.EmailField(label='Email Address')
-    password = forms.CharField(widget=forms.PasswordInput)
-
-    def clean(self):
-        cleaned_data = super().clean()
-        email = cleaned_data.get('email')
-        password = cleaned_data.get('password')
-
-        if email and password:
-            user = authenticate(email=email, password=password)
-            if not user:
-                raise forms.ValidationError('Invalid email or password.')
-        return cleaned_data
+    
+        
